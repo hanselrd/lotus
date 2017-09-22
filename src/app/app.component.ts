@@ -13,9 +13,20 @@ export class AppComponent {
     console.log(electronService.isElectron());
     if (electronService.isElectron()) {
       let si = electronService.si;
-      si.cpu((data) => {
-        console.log(data);
-      })
+      si.getAllData()
+        .then(data => {
+          console.log(data);
+          /*  cpu
+                brand
+                cache
+                cores
+                manufacturer
+                model
+              mem
+                total
+              blockDevices (need to call)
+          */
+        });
     }
   }
 
