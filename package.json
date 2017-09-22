@@ -6,11 +6,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:electron": "ng build --base-href . && cp -R src/desktop/* dist",
+    "electron": "npm run build:electron && electron dist/main.js",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build:electron": "ng build --base-href . && cp -R src/desktop/* dist",
-    "electron": "npm run build:electron && electron dist/main.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
