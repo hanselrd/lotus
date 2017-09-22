@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 
+import { ElectronService } from './services/electron.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-
-  constructor() {
-    console.log('bacon');
-    console.log(window['os'].arch());
-    console.log(window['os'].platform());
+  constructor(private electronService: ElectronService) {
+    console.log(this.electronService.isElectron());
+    if (this.electronService.isElectron()) {
+      console.log(this.electronService.os.platform(),
+        this.electronService.os.arch());
+    }
   }
 }
