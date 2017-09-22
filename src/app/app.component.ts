@@ -8,11 +8,14 @@ import { ElectronService } from './services/electron.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private electronService: ElectronService) {
-    console.log(this.electronService.isElectron());
-    if (this.electronService.isElectron()) {
-      console.log(this.electronService.os.platform(),
-        this.electronService.os.arch());
+
+  constructor(public electronService: ElectronService) {
+    console.log(electronService.isElectron());
+    if (electronService.isElectron()) {
+      let si = electronService.si;
+      si.cpu((data) => {
+        console.log(data);
+      })
     }
   }
 
@@ -39,4 +42,5 @@ export class AppComponent {
       });
     }
   }
+
 }
