@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:electron:watch": "ng build --base-href . --watch",
-    "build:electron:main": "tsc src/desktop/main.ts --outDir dist",
+    "build:electron:main": "tsc src/electron/main.ts --outDir dist",
     "electron": "npm run build:electron:main && electron dist/main.js",
     "test": "ng test",
     "lint": "ng lint",
