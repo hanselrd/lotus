@@ -1,6 +1,7 @@
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
-const url = require('url')
+import * as electron from 'electron';
+import { app, BrowserWindow } from 'electron';
+import * as path from 'path';
+import * as url from 'url';
 
 require('electron-reload')(__dirname, {
   electron: require('electron-prebuilt')
