@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor(public electronService: ElectronService,
               public electronHwidService: ElectronHwidService) {
-    console.log(electronService.isElectron());
+    console.log('electron', electronService.isElectron());
     if (electronService.isElectron()) {
       console.log(electronService.os.platform(), electronService.os.arch());
       electronHwidService.hwid
