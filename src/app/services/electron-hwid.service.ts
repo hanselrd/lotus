@@ -5,12 +5,16 @@ import { ElectronService } from './electron.service';
 @Injectable()
 export class ElectronHwidService {
 
-  hwid: Promise<string>;
+  private _hwid: Promise<string>;
 
   constructor(private electronService: ElectronService) {
     if (electronService.isElectron()) {
-      this.hwid = this.computeHwid();
+      this._hwid = this.computeHwid();
     }
+  }
+
+  get hwid() {
+    return this._hwid;
   }
 
   private async computeHwid() {
