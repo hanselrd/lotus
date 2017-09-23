@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { ElectronService } from './services/electron.service';
+import { HwidService } from './services/electron/hwid.service';
+
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -12,7 +14,8 @@ import { AppComponent } from './app.component';
     BrowserModule
   ],
   providers: [
-    ElectronService
+    ElectronService,
+    HwidService
   ],
   bootstrap: [AppComponent]
 })

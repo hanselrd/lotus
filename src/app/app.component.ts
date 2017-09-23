@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ElectronService } from './services/electron.service';
+import { HwidService } from './services/electron/hwid.service';
 
 @Component({
   selector: 'app-root',
@@ -9,24 +10,12 @@ import { ElectronService } from './services/electron.service';
 })
 export class AppComponent {
 
-  constructor(public electronService: ElectronService) {
+  constructor(public electronService: ElectronService,
+              public hwidService: HwidService) {
     console.log(electronService.isElectron());
     if (electronService.isElectron()) {
-      let si = electronService.si;
-      si.getAllData()
-        .then(data => {
-          console.log(data);
-          /*  cpu
-                brand
-                cache
-                cores
-                manufacturer
-                model
-              mem
-                total
-              blockDevices (need to call)
-          */
-        });
+      console.log(electronService.os.platform(), electronService.os.arch());
+      console.log('hwid', hwidService.hwid);
     }
   }
 
