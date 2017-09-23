@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/hanselrd/anchor.svg?branch=master)](https://travis-ci.org/hanselrd/anchor)
 [![Dependency Status](https://dependencyci.com/github/hanselrd/anchor/badge)](https://dependencyci.com/github/hanselrd/anchor)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
 ## Development server
 
