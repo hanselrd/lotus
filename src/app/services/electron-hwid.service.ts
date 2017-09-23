@@ -75,8 +75,3 @@ export class ElectronHwidService {
   }
 
 }
-
-
-/*
-bb75598cb07c7f10433bb506686cf332a007907d71b49e3240defc9e87725697.HGST HTS545050A7.sata.TW8513L93AGHJP.500107862016.Pentium® N3530.4.6.55.4026527744.Atom Processor Z36xxx/Z37xxx Series Graphics & Display .Intel Corporation.256
-*/
