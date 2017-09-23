@@ -15,7 +15,8 @@ export class AppComponent {
     console.log(electronService.isElectron());
     if (electronService.isElectron()) {
       console.log(electronService.os.platform(), electronService.os.arch());
-      console.log('hwid', hwidService.hwid);
+      hwidService.hwid
+        .then(data => console.log('hwid', data));
     }
   }
 

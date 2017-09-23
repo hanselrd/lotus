@@ -5,40 +5,37 @@ import { ElectronService } from './../electron.service';
 @Injectable()
 export class HwidService {
 
-  private _hwid = '';
-  private done = false;
+  hwid: Promise<string>;
 
   constructor(private electronService: ElectronService) {
     if (electronService.isElectron()) {
-      let si = electronService.si;
-      si.blockDevices()
-        .then(data => {
-          this._hwid += `${data[0].model}.${data[0].protocol}.${data[0].serial}.${data[0].size}`
-          si.cpu()
-            .then(data => {
-              this._hwid += `.${data.brand}.${data.cores}.${data.family}.${data.model}`;
-              si.mem()
-                .then(data => {
-                  this._hwid += `.${data.total}`;
-                  si.graphics()
-                    .then(data => {
-                      this._hwid += `.${data.controllers[0].model}.${data.controllers[0].vendor}.${data.controllers[0].vram}`
-                      this._hwid = electronService.crypto.createHash('sha256')
-                        .update(this._hwid)
-                        .digest('hex');
-                      this.done = true;
-                    });
-                });
-            });
-        });
+      this.hwid = this.computeHwid();
     }
   }
 
-  get hwid() {
-    if (this.done) {
-      return this._hwid;
-    } else {
-      return null;
+  private async computeHwid() {
+    const si = this.electronService.si;
+
+    try {
+      let hwid = '';
+
+      const blockDevicesData = await si.blockDevices();
+      hwid += `${blockDevicesData[0].model}.${blockDevicesData[0].protocol}.${blockDevicesData[0].serial}.${blockDevicesData[0].size}`;
+
+      const cpuData = await si.cpu();
+      hwid += `.${cpuData.brand}.${cpuData.cores}.${cpuData.family}.${cpuData.model}`;
+
+      const memData = await si.mem();
+      hwid += `.${memData.total}`;
+
+      const graphicsData = await si.graphics();
+      hwid += `.${graphicsData.controllers[0].model}.${graphicsData.controllers[0].vendor}.${graphicsData.controllers[0].vram}`;
+
+      return this.electronService.crypto.createHash('sha256')
+        .update(hwid)
+        .digest('hex');
+    } catch(e) {
+      console.log(e);
     }
   }
 
