@@ -1,7 +1,7 @@
 <h1>App</h1>
 <div *ngIf="electronService.isElectron(); else web">
   <h2>Electron mode</h2>
-  <p>{{ hwidService.hwid | async }}</p>
+  <p>{{ electronHwidService.hwid | async }}</p>
 </div>
 <ng-template #web>
   <h2>Web mode</h2>

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { ElectronService } from './services/electron.service';
-import { HwidService } from './services/electron/hwid.service';
+import { ElectronHwidService } from './services/electron-hwid.service';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     ElectronService,
-    HwidService
+    ElectronHwidService
   ],
   bootstrap: [AppComponent]
 })

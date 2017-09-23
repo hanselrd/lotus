@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ElectronService } from './services/electron.service';
-import { HwidService } from './services/electron/hwid.service';
+import { ElectronHwidService } from './services/electron-hwid.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +11,11 @@ import { HwidService } from './services/electron/hwid.service';
 export class AppComponent {
 
   constructor(public electronService: ElectronService,
-              public hwidService: HwidService) {
+              public electronHwidService: ElectronHwidService) {
     console.log(electronService.isElectron());
     if (electronService.isElectron()) {
       console.log(electronService.os.platform(), electronService.os.arch());
-      hwidService.hwid
+      electronHwidService.hwid
         .then(data => console.log('hwid', data));
     }
   }
