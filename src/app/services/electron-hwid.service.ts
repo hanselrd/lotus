@@ -15,7 +15,6 @@ export class ElectronHwidService {
 
   private async computeHwid() {
     const si = this.electronService.si;
-
     try {
       let hwid = '';
 
