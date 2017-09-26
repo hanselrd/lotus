@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:electron": "ng build --base-href . --prod && npm run build:electron:main",
     "build:electron:watch": "ng build --base-href . --watch",
     "build:electron:main": "tsc src/electron/main.ts --outDir dist",
     "electron": "npm run build:electron:main && electron dist/main.js",
