@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
+// for testing
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { ElectronService } from './services/electron.service';
-import { ElectronHwidService } from './services/electron-hwid.service';
+import { FirebaseListObservable } from 'angularfire2/database';
+
+import { AuthService } from './services/auth/auth.service';
+import { DatabaseService } from './services/database/database.service';
+import { ElectronService } from './services/electron/electron.service';
+import { ElectronHwidService } from './services/electron-hwid/electron-hwid.service';
+import { User } from './models/user';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +17,64 @@ import { ElectronHwidService } from './services/electron-hwid.service';
 })
 export class AppComponent {
 
-  constructor(public electronService: ElectronService,
+  loginForm: FormGroup;
+  users: FirebaseListObservable<User[]>;
+
+  constructor(private formBuilder: FormBuilder,
+              public authService: AuthService,
+              public databaseService: DatabaseService,
+              public electronService: ElectronService,
               public electronHwidService: ElectronHwidService) {
+    this.loginForm = formBuilder.group({
+      'email': ['', [Validators.required, Validators.email]],
+      'password': ['', Validators.required]
+    });
+
+    this.users = databaseService.afDb.list('/users');
+
+    authService.user
+      .subscribe(user => {
+        if (user) {
+          console.log(user.toJSON());
+        }
+      });
+
     console.log('electron', electronService.isElectron());
     if (electronService.isElectron()) {
       console.log(electronService.os.platform(), electronService.os.arch());
       electronHwidService.hwid
         .then(data => console.log('hwid', data));
     }
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  signIn() {
+    this.authService.signInWithEmailAndPassword(this.email.value, this.password.value)
+      .then(a => {
+        console.log('Signed In');
+
+        // Update user info
+        this.electronHwidService.hwid
+          .then(hwid => {
+            let temp = new User();
+            temp.hwid = hwid;
+            temp.platform = this.electronService.os.platform();
+            temp.arch = this.electronService.os.arch();
+            temp.lastLogin = Date.now();
+            this.authService.user
+              .subscribe(user => {
+                this.users.update(user.uid, temp);
+              });
+          });
+      })
+      .catch(a => console.log(a.message));
   }
 
   openFile() {
