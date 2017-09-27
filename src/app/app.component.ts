@@ -19,6 +19,7 @@ export class AppComponent {
 
   loginForm: FormGroup;
   users: FirebaseListObservable<User[]>;
+  admins: FirebaseListObservable<any[]>;
 
   constructor(private formBuilder: FormBuilder,
               public authService: AuthService,
@@ -31,6 +32,7 @@ export class AppComponent {
     });
 
     this.users = databaseService.afDb.list('/users');
+    this.admins = databaseService.afDb.list('/roles/admins');
 
     authService.user
       .subscribe(user => {
@@ -60,19 +62,28 @@ export class AppComponent {
       .then(a => {
         console.log('Signed In');
 
-        // Update user info
-        this.electronHwidService.hwid
-          .then(hwid => {
-            let temp = new User();
-            temp.hwid = hwid;
-            temp.platform = this.electronService.os.platform();
-            temp.arch = this.electronService.os.arch();
-            temp.lastLogin = Date.now();
-            this.authService.user
-              .subscribe(user => {
-                this.users.update(user.uid, temp);
-              });
+        this.authService.user
+          .subscribe(user => {
+            this.admins.update(user.uid, {
+              log: 0
+            });
           });
+
+        // Update user info
+        if (this.electronService.isElectron()) {
+          this.electronHwidService.hwid
+            .then(hwid => {
+              let temp = new User();
+              temp.hwid = hwid;
+              temp.platform = this.electronService.os.platform();
+              temp.arch = this.electronService.os.arch();
+              temp.lastLogin = Date.now();
+              this.authService.user
+                .subscribe(user => {
+                  this.users.update(user.uid, temp);
+                });
+            });
+        }
       })
       .catch(a => console.log(a.message));
   }
