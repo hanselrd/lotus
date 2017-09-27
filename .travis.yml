@@ -4,7 +4,10 @@ node_js:
   - "7"
   - "6"
 install:
- - npm install
+  - npm install
 script:
- - npm run build
- - npm run build:electron:main
+  - mv src/app/firebase.config.example.ts src/app/firebase.config.ts
+  - npm run build
+  - npm run build:docs
+  - npm run build:electron
+  - npm run build:electron:main
