@@ -9,7 +9,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { firebaseConfig } from './firebase.config';
 
 import { AuthService } from './services/auth/auth.service';
-import { DatabaseService } from './services/database/database.service';
 import { ElectronService } from './services/electron/electron.service';
 import { ElectronHwidService } from './services/electron-hwid/electron-hwid.service';
 
@@ -35,7 +34,6 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     AuthService,
-    DatabaseService,
     ElectronService,
     ElectronHwidService
   ],

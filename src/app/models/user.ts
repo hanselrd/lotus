@@ -1,6 +1,18 @@
+import * as firebase from 'firebase/app';
+
 export class User {
-  hwid: string;
-  platform: NodeJS.Platform;
-  arch: string;
-  lastLogin: number;
+  uid: string;
+  email: string;
+  phoneNumber: string;
+  displayName: string;
+  providers: firebase.UserInfo[];
+  level: number;
+
+  constructor(auth: firebase.User) {
+    this.uid = auth.uid;
+    this.email = auth.email;
+    this.phoneNumber = auth.phoneNumber;
+    this.displayName = auth.displayName;
+    this.providers = auth.providerData;
+  }
 }
