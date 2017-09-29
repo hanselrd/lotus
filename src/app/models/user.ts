@@ -6,7 +6,7 @@ export class User {
   phoneNumber: string;
   displayName: string;
   providers: firebase.UserInfo[];
-  level: number;
+  access: number;
 
   constructor(auth: firebase.User) {
     this.uid = auth.uid;
