@@ -35,7 +35,11 @@ export class LoginFormComponent implements OnInit {
   }
 
   onLogin() {
-    this.authService.loginWithEmailAndPassword(this.email.value, this.password.value);
+    this.authService.login(this.email.value, this.password.value)
+      .then(() => {
+        let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
+        this.router.navigate([cbUrl || '']);
+      });
   }
 
 }
