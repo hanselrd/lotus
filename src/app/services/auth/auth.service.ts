@@ -44,19 +44,19 @@ export class AuthService {
       .catch(error => console.log(error));
   }
 
-  signInWithEmailAndPassword(email: string, password: string) {
+  loginWithEmailAndPassword(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => console.log('Signed in successfully'))
       .catch(error => console.log(error));
   }
 
-  signOut() {
+  logout() {
     return this.afAuth.auth.signOut()
       .then(() => console.log('Signed out successfully'))
       .catch(error => console.log(error));
   }
 
-  get isSignedIn() {
+  isLoggedIn() {
     return (this.afAuth.auth.currentUser)? true : false;
   }
 
