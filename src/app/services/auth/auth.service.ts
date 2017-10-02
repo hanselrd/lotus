@@ -22,9 +22,7 @@ export class AuthService {
 
   register(email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log('Registered successfully');
-      })
+      .then(() => console.log('Registered successfully'))
       .catch(error => console.log(error));
   }
 
@@ -36,9 +34,7 @@ export class AuthService {
 
   logout() {
     return this.afAuth.auth.signOut()
-      .then(() => {
-        console.log('Logged out successfully');
-      })
+      .then(() => console.log('Logged out successfully'))
       .catch(error => console.log(error));
   }
 
