@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './../../guards/auth/auth.guard';
-import { GuestGuard } from './../../guards/guest/guest.guard';
+import { AuthGuard } from '../../guards/auth/auth.guard';
+import { GuestGuard } from '../../guards/guest/guest.guard';
 import { PageComponent } from '../../components/page/page.component';
 import { HomeComponent } from '../../components/home/home.component';
-import { LoginFormComponent } from './../../components/login-form/login-form.component';
+import { LoginFormComponent } from '../../components/login-form/login-form.component';
+import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginFormComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'register',
+    component: RegisterFormComponent,
+    canActivate: [GuestGuard]
   }
 ];
 
@@ -38,7 +44,8 @@ const routes: Routes = [
   declarations: [
     PageComponent,
     HomeComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    RegisterFormComponent
   ],
   providers: [
     AuthGuard,

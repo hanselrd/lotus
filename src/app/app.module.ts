@@ -10,6 +10,7 @@ import { firebaseConfig } from './firebase.config';
 import { RoutingModule } from './modules/routing/routing.module';
 import { CollapseDirective } from './directives/collapse.directive';
 import { AuthService } from './services/auth/auth.service';
+import { DatabaseService } from './services/database/database.service';
 import { ElectronService } from './services/electron/electron.service';
 import { ElectronHwidService } from './services/electron-hwid/electron-hwid.service';
 import { AppComponent } from './app.component';
@@ -30,6 +31,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   providers: [
     AuthService,
+    DatabaseService,
     ElectronService,
     ElectronHwidService
   ],
