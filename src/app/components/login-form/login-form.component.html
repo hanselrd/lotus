@@ -8,10 +8,10 @@
       </div>
       <div *ngIf="email.touched && email.invalid; else emailNoErrors">
         <small *ngIf="email.errors?.required" class="form-text text-danger">
-          Enter your email address
+          Enter your email address.
         </small>
         <small *ngIf="email.errors?.email" class="form-text text-danger">
-          Your email address is invalid
+          Your email address is invalid.
         </small>
       </div>
       <ng-template #emailNoErrors>
@@ -26,11 +26,11 @@
       </div>
       <div *ngIf="password.touched && password.invalid">
         <small *ngIf="password.errors?.required" class="form-text text-danger">
-          Enter your password
+          Enter your password.
         </small>
       </div>
     </div>
-    <button class="btn btn-primary">Login</button>
+    <button class="btn btn-primary" [disabled]="email.invalid || password.invalid">Login</button>
     <a routerLink="/register"><button class="btn btn-secondary">Register</button></a>
   </form>
 </app-page>

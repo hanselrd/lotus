@@ -15,12 +15,14 @@ import { ElectronService } from './services/electron/electron.service';
 import { ElectronHwidService } from './services/electron-hwid/electron-hwid.service';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CollapseDirective,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
