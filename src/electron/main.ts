@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as url from 'url';
 
 require('electron-reload')(__dirname, {
-  electron: require('electron-prebuilt')
+  electron: require('electron')
 })
 
 // Keep a global reference of the window object, if you don't, the window will
