@@ -1,5 +1,5 @@
 {
-  "rules": {
+  "rules_old": {
     "displayNames": {
       ".read": "auth !== null",
       "$displayName": {
@@ -31,6 +31,21 @@
         "displayName": { ".validate":	"newData.isString() && newData.val().length >= 4 && newData.val().length <= 20 && (!root.child('displayNames').child(newData.val().toLowerCase()).exists() || root.child('displayNames').child(newData.val().toLowerCase()).val() === $uid)" },
         // no other fields can be included
         "$other": { ".validate": false }
+      }
+    }
+  },
+
+  // rules for new modern one
+  "rules_new": {
+    ".read": "auth !== null && root.child('users').child(auth.uid).child('access').val() >= 2",
+    "users": {
+      ".read": "auth !== null && data.child(auth.uid).child('access').val() >= 1",
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        ".write": "auth !== null && auth.uid === $uid",
+        ".validate": "newData.child('access').val() === data.child('access').val()",
+        "level": { ".write": false },
+      	"$other": { ".write": "auth !== null && auth.uid === $uid" }
       }
     }
   }

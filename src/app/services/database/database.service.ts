@@ -2,48 +2,44 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 
+import { Observable } from 'rxjs/Observable';
+
 import { AuthService } from '../auth/auth.service';
 import { User } from '../../models/user';
 
 @Injectable()
 export class DatabaseService {
 
-  private _user: AngularFireObject<User> = null;
+  private _userRef: AngularFireObject<User> = null;
+  private _user: Observable<User>;
 
   constructor(private afDb: AngularFireDatabase,
               private authService: AuthService) {
     authService.user
       .subscribe(auth => {
         if (auth !== null) {
-          this._user = afDb.object(`/users/${auth.uid}`);
-          // this.user.$ref.transaction(currentValue => {
-          //   if (currentValue === null) {
-          //     return new User(auth);
-          //   }
-          // });
-          this._user.snapshotChanges()
-            .map(action => {
-              action.payload.ref.transaction(currentValue => {
-                if (currentValue === null) {
-                  return new User(auth);
-                }
-              });
-            });
+          this._userRef = afDb.object(`users/${auth.uid}`);
+          this._user = this._userRef.valueChanges();
+          this._user.subscribe(user => {
+            if (user === null) {
+              this.createUser(new User(auth));
+            }
+          });
         }
       });
   }
 
   get user() {
-    return this._user.valueChanges();
+    return this._user;
   }
 
   createUser(user: User) {
-    this._user.set(user)
+    this._userRef.set(user)
       .catch(error => console.log(error));
   }
 
   updateUser(user: User) {
-    this._user.update(user)
+    this._userRef.update(user)
       .catch(error => console.log(error));
   }
 

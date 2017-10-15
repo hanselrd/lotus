@@ -1,3 +1,4 @@
 <app-page title="Dashboard">
   <p>Welcome, {{ (dbService.user | async)?.displayName }}</p>
+  <p>{{ (dbService.user | async) | json }}</p>
 </app-page>
