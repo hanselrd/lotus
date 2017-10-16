@@ -7,6 +7,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { firebaseConfig } from './firebase.config';
 
+import { FlashMessagesModule } from 'angular2-flash-messages';
+
 import { RoutingModule } from './modules/routing/routing.module';
 import { CollapseDirective } from './directives/collapse.directive';
 import { AuthService } from './services/auth/auth.service';
@@ -29,7 +31,8 @@ import { FooterComponent } from './components/footer/footer.component';
     RoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    FlashMessagesModule
   ],
   providers: [
     AuthService,

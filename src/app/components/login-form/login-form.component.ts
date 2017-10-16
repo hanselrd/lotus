@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { FlashMessagesService } from 'angular2-flash-messages';
+
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -16,10 +18,11 @@ export class LoginFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
+              private flashMessagesService: FlashMessagesService,
               private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       'email': ['', [Validators.required, Validators.email]],
-      'password': ['', Validators.required]
+      'password': ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -39,6 +42,9 @@ export class LoginFormComponent implements OnInit {
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);
+      })
+      .catch(error => {
+        this.flashMessagesService.show(error.message, { cssClass: 'alert-danger', timeout: 6000 });
       });
   }
 

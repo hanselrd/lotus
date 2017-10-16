@@ -4,43 +4,39 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angular
 
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from '../auth/auth.service';
-import { User } from '../../models/user';
-
 @Injectable()
 export class DatabaseService {
 
-  private _userRef: AngularFireObject<User> = null;
-  private _user: Observable<User>;
+  // private _userRef: AngularFireObject<User>;
+  // private _user: Observable<User>;
 
-  constructor(private afDb: AngularFireDatabase,
-              private authService: AuthService) {
-    authService.user
-      .subscribe(auth => {
-        if (auth !== null) {
-          this._userRef = afDb.object(`users/${auth.uid}`);
-          this._user = this._userRef.valueChanges();
-          this._user.subscribe(user => {
-            if (user === null) {
-              this.createUser(new User(auth));
-            }
-          });
-        }
-      });
+  constructor(private afDb: AngularFireDatabase) {
+    // authService.user
+    //   .subscribe(auth => {
+    //     if (auth !== null) {
+    //       this._userRef = afDb.object(`users/${auth.uid}`);
+    //       this._user = this._userRef.valueChanges();
+    //       this._user.subscribe(user => {
+    //         if (user === null) {
+    //           this.createUser(new User(auth));
+    //         }
+    //       });
+    //     }
+    //   });
   }
 
-  get user() {
-    return this._user;
-  }
+  // get user() {
+  //   return this._user;
+  // }
 
-  createUser(user: User) {
-    this._userRef.set(user)
-      .catch(error => console.log(error));
-  }
+  // createUser(user: User) {
+  //   this._userRef.set(user)
+  //     .catch(error => console.log(error));
+  // }
 
-  updateUser(user: User) {
-    this._userRef.update(user)
-      .catch(error => console.log(error));
-  }
+  // updateUser(user: User) {
+  //   this._userRef.update(user)
+  //     .catch(error => console.log(error));
+  // }
 
 }
