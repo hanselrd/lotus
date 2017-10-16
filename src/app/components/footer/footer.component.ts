@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from '../../services/auth/auth.service';
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -8,8 +10,24 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
 
   date: Date = new Date();
+  cssClass: string;
 
-  constructor() { }
+  constructor(public authService: AuthService) {
+    authService.authState
+      .subscribe(auth => {
+        if (auth !== null) {
+          authService.user
+            .subscribe(user => {
+              if (user.access >= 1) {
+                this.cssClass = 'text-danger';
+              }
+              if (user.access >= 2) {
+                this.cssClass = 'text-primary';
+              }
+            });
+        }
+      });
+  }
 
   ngOnInit() {
   }

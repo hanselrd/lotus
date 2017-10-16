@@ -1,3 +1,6 @@
 <footer class="text-center text-muted">
   Copyright &copy; {{ date.getFullYear() }} Lotus
+  <span *ngIf="(authService.authState | async) && (authService.user | async)?.access">
+    | <span [class]="cssClass"><i class="fa fa-user-circle-o"></i></span>
+  </span>
 </footer>
