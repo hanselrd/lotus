@@ -1,4 +1,5 @@
 <app-page title="Dashboard">
   <p>Welcome, {{ (authService.user | async)?.displayName }}</p>
-  <p>{{ (authService.user | async) | json }}</p>
+  <p>Your IP address is: {{ ipService.ip }}</p>
+  <!-- <p>{{ (authService.user | async) | json }}</p> -->
 </app-page>

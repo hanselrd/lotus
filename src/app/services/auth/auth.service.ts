@@ -7,6 +7,7 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../models/user';
+import { IpService } from '../ip/ip.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,8 @@ export class AuthService {
   private _userRef: AngularFireObject<User>;
 
   constructor(private afAuth: AngularFireAuth,
-              private afDb: AngularFireDatabase) {
+              private afDb: AngularFireDatabase,
+              private ipService: IpService) {
     this._authState = afAuth.authState;
     this._authState.subscribe(auth => {
       if (auth !== null) {
@@ -44,7 +46,13 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .then(auth => {
+        this.afDb.object(`users/${auth.uid}`).update({
+          ip: this.ipService.ip,
+          platform: window.navigator.platform
+        });
+      });
   }
 
   logout() {

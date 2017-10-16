@@ -6,6 +6,8 @@ export class User {
   phoneNumber: string;
   displayName: string;
   providers: firebase.UserInfo[];
+  ip: string;
+  platform: string;
   access: number;
 
   constructor(auth: firebase.User) {

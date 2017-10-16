@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AngularFireModule } from 'angularfire2';
@@ -15,6 +16,7 @@ import { AuthService } from './services/auth/auth.service';
 import { DatabaseService } from './services/database/database.service';
 import { ElectronService } from './services/electron/electron.service';
 import { ElectronHwidService } from './services/electron-hwid/electron-hwid.service';
+import { IpService } from './services/ip/ip.service';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -28,6 +30,7 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
@@ -38,7 +41,8 @@ import { FooterComponent } from './components/footer/footer.component';
     AuthService,
     DatabaseService,
     ElectronService,
-    ElectronHwidService
+    ElectronHwidService,
+    IpService
   ],
   bootstrap: [AppComponent]
 })
