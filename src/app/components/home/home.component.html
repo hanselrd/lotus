@@ -1,0 +1,4 @@
+<app-page title="Dashboard">
+  <p>Welcome, {{ (authService.user | async)?.displayName }}</p>
+  <p>{{ (authService.user | async) | json }}</p>
+</app-page>

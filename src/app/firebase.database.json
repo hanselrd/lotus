@@ -1,0 +1,52 @@
+{
+  "rules_old": {
+    "displayNames": {
+      ".read": "auth !== null",
+      "$displayName": {
+        // if logged in and (user has no displayName or owns displayName)
+        ".write": "auth !== null && (!data.exists() && (!root.child('users').child(auth.uid).child('displayName').exists()) || $displayName === root.child('users').child(auth.uid).child('displayName').val())"
+      }
+    },
+    "roles": {
+      // if logged in and is admin
+      ".read": "auth !== null && root.child('roles').child(auth.uid).child('admin').val() === true",
+      "$uid": {
+        // if logged in and has same uid as entry
+        ".read": "auth !== null && $uid === auth.uid"
+      }
+    },
+    "users": {
+      // if logged in and is admin
+      ".read": "auth !== null && root.child('roles').child(auth.uid).child('admin').val() === true",
+      "$uid": {
+        // if logged in and has same uid as entry
+        ".read": "auth !== null && $uid === auth.uid",
+        // if logged in and has same uid as entry
+        ".write": "auth !== null && $uid === auth.uid",
+        // if new data has email, displayName fields
+        ".validate": "newData.hasChildren(['email', 'displayName'])",
+        // email must be a string
+        "email": { ".validate": "newData.isString()" },
+        // displayName must be a string and cannot be taken
+        "displayName": { ".validate":	"newData.isString() && newData.val().length >= 4 && newData.val().length <= 20 && (!root.child('displayNames').child(newData.val().toLowerCase()).exists() || root.child('displayNames').child(newData.val().toLowerCase()).val() === $uid)" },
+        // no other fields can be included
+        "$other": { ".validate": false }
+      }
+    }
+  },
+
+  // rules for new modern one
+  "rules_new": {
+    ".read": "auth !== null && root.child('users').child(auth.uid).child('access').val() >= 2",
+    "users": {
+      ".read": "auth !== null && data.child(auth.uid).child('access').val() >= 1",
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        ".write": "auth !== null && auth.uid === $uid",
+        ".validate": "newData.child('access').val() === data.child('access').val()",
+        "level": { ".write": false },
+      	"$other": { ".write": "auth !== null && auth.uid === $uid" }
+      }
+    }
+  }
+}

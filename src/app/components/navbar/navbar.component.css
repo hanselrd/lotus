@@ -1,0 +1,6 @@
+nav {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(lightgrey, white));
+  background-image: -webkit-linear-gradient(top, lightgrey, white);
+  background-image: -moz-linear-gradient(top, lightgrey, white);
+  background-image: linear-gradient(to bottom, lightgrey, white);
+}

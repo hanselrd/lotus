@@ -1,10 +1,8 @@
-<h1>App</h1>
-<div *ngIf="electronService.isElectron(); else web">
-  <h2>Electron mode</h2>
-  <p>{{ electronHwidService.hwid | async }}</p>
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="text-center">
+    <flash-messages></flash-messages>
+  </div>
+  <router-outlet></router-outlet>
 </div>
-<ng-template #web>
-  <h2>Web mode</h2>
-</ng-template>
-<button class="btn btn-sm btn-success" (click)="openFile()">Open File</button>
-<button class="btn btn-sm btn-primary" (click)="showMessage()">Show Message</button>
+<app-footer></app-footer>
