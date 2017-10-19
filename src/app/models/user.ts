@@ -29,7 +29,7 @@ export class User {
         if (action.payload.exists) {
           const data = action.payload.data() as IUser;
           const id = action.payload.id;
-          if (data.role) {
+          if (data.role != null) {
             data.role = new Role(afs, data.role as any);
           }
           data.providers = JSON.parse(JSON.stringify(auth.providerData));

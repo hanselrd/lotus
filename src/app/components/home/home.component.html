@@ -3,4 +3,16 @@
   <p>Your IP address is: {{ ipService.ip }}</p>
   <p>{{ ((authService.user.data | async)?.role.data | async) | json }}</p>
   <!-- <p>{{ (authService.user.data | async) | circularJson }}</p> -->
+  <p *ngIf="role?.isSub()">
+    Subscriber
+  </p>
+  <p *ngIf="role?.isMod()">
+    Moderator
+  </p>
+  <p *ngIf="role?.isAdmin()">
+    Administrator
+  </p>
+  <p *ngIf="role?.isOwner()">
+    Owner
+  </p>
 </app-page>

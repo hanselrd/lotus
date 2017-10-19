@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from './../../services/auth/auth.service';
 import { IpService } from './../../services/ip/ip.service';
+import { User } from './../../models/user';
+import { Role } from './../../models/role';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +12,17 @@ import { IpService } from './../../services/ip/ip.service';
 })
 export class HomeComponent implements OnInit {
 
+  user: User;
+  role: Role;
+
   constructor(public authService: AuthService,
-              public ipService: IpService) { }
+              public ipService: IpService) {
+    this.user = authService.user;
+    authService.user.data
+      .subscribe(userData => {
+        this.role = userData.role;
+      });
+  }
 
   ngOnInit() {
   }
