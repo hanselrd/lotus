@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/auth/auth.service';
+import { User } from './../../models/user';
 
 @Component({
   selector: 'app-footer',
@@ -18,12 +19,16 @@ export class FooterComponent implements OnInit {
         if (auth !== null) {
           authService.user
             .subscribe(user => {
-              if (user.access >= 1) {
-                this.cssClass = 'text-danger';
-              }
-              if (user.access >= 2) {
-                this.cssClass = 'text-primary';
-              }
+              // if (user.isRoot()) {
+              //   this.cssClass = 'text-primary';
+              // } else if (user.isAdmin()) {
+              //   this.cssClass = 'text-danger';
+              // }
+              console.log(user);
+              // console.log('sub', user.isSubscriber());
+              // console.log('mod', user.isModerator());
+              // console.log('admin', user.isAdministrator());
+              // console.log('root', user.isRoot());
             });
         }
       });
