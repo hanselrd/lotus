@@ -1,6 +1,6 @@
 <footer class="text-center text-muted">
   Copyright &copy; {{ date.getFullYear() }} Lotus
-  <span *ngIf="(authService.authState | async) && (authService.user | async)?.hasRole()">
-    | <span [class]="cssClass"><i class="fa fa-user-circle-o"></i></span>
+  <span *ngIf="(authService.authState | async) && roleColor && roleName">
+    | <span [style.color]="roleColor"><i class="fa fa-user-circle-o"></i> {{ roleName }}</span>
   </span>
 </footer>

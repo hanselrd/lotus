@@ -1,74 +1,59 @@
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Role, RoleData } from './role';
+import { Role } from './role';
 
-export interface UserData {
+export interface IUser {
 
-  id?: string;
-  providers?: firebase.UserInfo[];
-  platform?: string;
-  role?: Role;
-  displayName?: string;
-  ip?: string;
+  id: string;
+  providers: firebase.UserInfo[];
+  platform: string;
+  role: Role;
+  displayName: string;
+  ip: string;
 
 }
 
 export class User {
 
-  private _role: number;
+  private _doc: AngularFirestoreDocument<IUser>;
+  private _data: Observable<IUser>;
 
-  constructor(auth: firebase.User,
-              public data: UserData) {
-    if (this.hasRole()) {
-      ((this.data.role as any) as firebase.firestore.DocumentReference).get()
-        .then(roleDoc => {
-          let role = new Role(roleDoc.data() as RoleData);
-          role.data.id = roleDoc.id;
-          this.data.role = role;
-          this._role = Number.parseInt(roleDoc.id, 10);
-        });
-    }
-
-    this.data.providers = auth.providerData
-      .map(provider => {
-        let obj = {
-          displayName: provider.displayName,
-          email: provider.email,
-          phoneNumber: provider.phoneNumber,
-          photoURL: provider.photoURL,
-          uid: provider.uid
-        } as firebase.UserInfo;
-
-        Object.keys(obj).forEach(key => {
-          !obj[key] && delete obj[key];
-        });
-
-        return obj;
+  constructor(private afs: AngularFirestore,
+              auth: firebase.User) {
+    this._doc = afs.doc(`users/${auth.uid}`);
+    this._data = this._doc.snapshotChanges()
+      .map(action => {
+        if (action.payload.exists) {
+          const data = action.payload.data() as IUser;
+          const id = action.payload.id;
+          if (data.role) {
+            data.role = new Role(afs, data.role as any);
+          }
+          data.providers = JSON.parse(JSON.stringify(auth.providerData));
+          data.platform = window.navigator.platform;
+          return { id, ...data };
+        }
+        return null;
       });
-
-    this.data.platform = window.navigator.platform;
   }
 
-  hasRole() {
-    return (this.data.role)? true : false;
+  get data() {
+    return this._data;
   }
 
-  // isSubscriber() {
-  //   return this._role >= 1;
-  // }
+  static set(afs: AngularFirestore, id: string, data: IUser) {
+    delete data.id;
+    data.role = data.role.id as any;
+    afs.doc(`users/${id}`).set(data);
+  }
 
-  // isModerator() {
-  //   return this._role >= 2;
-  // }
-
-  // isAdministrator() {
-  //   return this._role >= 3;
-  // }
-
-  // isRoot() {
-  //   return this._role >= 4;
-  // }
+  static update(afs: AngularFirestore, id: string, data: Partial<IUser>) {
+    delete data.id;
+    data.role = data.role.id as any;
+    afs.doc(`users/${id}`).update(data);
+  }
 
 }
