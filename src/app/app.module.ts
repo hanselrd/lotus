@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { firebaseConfig } from './firebase.config';
 
@@ -33,6 +34,7 @@ import { FooterComponent } from './components/footer/footer.component';
     RoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     AngularFirestoreModule.enablePersistence(),
     FlashMessagesModule
   ],
