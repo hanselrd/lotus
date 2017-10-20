@@ -13,14 +13,14 @@ import { Role } from './../../models/role';
 export class HomeComponent implements OnInit {
 
   user: User;
-  role: Role;
+  roles: Role[];
 
   constructor(public authService: AuthService,
               public ipService: IpService) {
     this.user = authService.user;
     authService.user.data
       .subscribe(userData => {
-        this.role = userData.role;
+        this.roles = userData.roles;
       });
   }
 

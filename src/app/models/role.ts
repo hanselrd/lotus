@@ -38,30 +38,37 @@ export class Role {
     return this._data;
   }
 
+  isBanned() {
+    if (this._role) {
+      return this._role.id == 0;
+    }
+    return false;
+  }
+
   isSub() {
     if (this._role) {
-      return this._role.id >= 1;
+      return this._role.id == 1;
     }
     return false;
   }
 
   isMod() {
     if (this._role) {
-      return this._role.id >= 2;
+      return this._role.id == 2;
     }
     return false;
   }
 
   isAdmin() {
     if (this._role) {
-      return this._role.id >= 3;
+      return this._role.id == 3;
     }
     return false;
   }
 
   isOwner() {
     if (this._role) {
-      return this._role.id >= 4;
+      return this._role.id == 4;
     }
     return false;
   }

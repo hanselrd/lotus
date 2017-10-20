@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/auth/auth.service';
-import { User } from './../../models/user';
+import { Role } from './../../models/role';
 
 @Component({
   selector: 'app-footer',
@@ -11,8 +11,7 @@ import { User } from './../../models/user';
 export class FooterComponent implements OnInit {
 
   date: Date = new Date();
-  roleColor: string;
-  roleName: string;
+  roles: Role[];
 
   constructor(public authService: AuthService) {
     authService.authState
@@ -20,15 +19,7 @@ export class FooterComponent implements OnInit {
         if (auth !== null) {
           authService.user.data
             .subscribe(userData => {
-              if (userData.role.data) {
-                userData.role.data
-                  .subscribe(roleData => {
-                    if (roleData) {
-                      this.roleColor = roleData.color;
-                      this.roleName = roleData.name;
-                    }
-                  });
-              }
+              this.roles = userData.roles;
             });
         }
       });

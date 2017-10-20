@@ -10,7 +10,7 @@ export interface IUser {
   id: string;
   providers: firebase.UserInfo[];
   platform: string;
-  role: Role;
+  roles: Role[];
   displayName: string;
   ip: string;
 
@@ -29,11 +29,11 @@ export class User {
         if (action.payload.exists) {
           const data = action.payload.data() as IUser;
           const id = action.payload.id;
-          if (data.role != null) {
-            data.role = new Role(afs, data.role as any);
+          if (data.roles != null) {
+            data.roles.forEach((role, index, roles) => {
+              roles[index] = new Role(afs, role as any);
+            });
           }
-          data.providers = JSON.parse(JSON.stringify(auth.providerData));
-          data.platform = window.navigator.platform;
           return { id, ...data };
         }
         return null;
@@ -46,13 +46,21 @@ export class User {
 
   static set(afs: AngularFirestore, id: string, data: IUser) {
     delete data.id;
-    data.role = data.role.id as any;
+    if (data.roles) {
+      data.roles.forEach((role, index, roles) => {
+        roles[index] = role.id as any;
+      });
+    }
     afs.doc(`users/${id}`).set(data);
   }
 
   static update(afs: AngularFirestore, id: string, data: Partial<IUser>) {
     delete data.id;
-    data.role = data.role.id as any;
+    if (data.roles) {
+      data.roles.forEach((role, index, roles) => {
+        roles[index] = role.id as any;
+      });
+    }
     afs.doc(`users/${id}`).update(data);
   }
 

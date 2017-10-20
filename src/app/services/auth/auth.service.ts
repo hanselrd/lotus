@@ -6,7 +6,7 @@ import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
 
-import { User } from '../../models/user';
+import { IUser, User } from '../../models/user';
 import { IpService } from '../ip/ip.service';
 
 @Injectable()
@@ -37,19 +37,12 @@ export class AuthService {
   register(email: string, password: string, displayName: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(auth => {
-        // let user = new User(this.afs, auth);
-        // user.data.displayName = displayName;
-        // user.data.ip = this.ipService.ip;
-        // User.set(this.afs, auth.uid, user);
-
-
-
-        // let user = new User(auth, {
-        //   displayName,
-        //   ip: this.ipService.ip
-        // });
-        // this.afs.doc(`users/${auth.uid}`).set(user.data)
-        //   .catch(error => console.log(error));
+        let data = {} as IUser;
+        data.displayName = displayName;
+        data.ip = this.ipService.ip;
+        data.platform = window.navigator.platform;
+        data.providers = JSON.parse(JSON.stringify(auth.providerData));
+        User.set(this.afs, auth.uid, data);
       });
   }
 
@@ -60,6 +53,7 @@ export class AuthService {
         user.data
           .subscribe(data => {
             data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
             User.update(this.afs, auth.uid, data);
           });
       });

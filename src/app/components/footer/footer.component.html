@@ -1,6 +1,8 @@
 <footer class="text-center text-muted">
+  <div *ngIf="(authService.authState | async)">
+    <span *ngFor="let role of roles">
+      <span [style.color]="(role.data | async)?.color" class="badge badge-light">{{ (role.data | async)?.name }}</span>
+    </span>
+  </div>
   Copyright &copy; {{ date.getFullYear() }} Lotus
-  <span *ngIf="(authService.authState | async) && roleColor && roleName">
-    | <span [style.color]="roleColor"><i class="fa fa-user-circle-o"></i> {{ roleName }}</span>
-  </span>
 </footer>
