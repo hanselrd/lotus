@@ -4,25 +4,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FlashMessagesService } from 'angular2-flash-messages';
 
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '@app/core';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class RegisterFormComponent implements OnInit {
 
-  loginForm: FormGroup;
+  registerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
               private flashMessagesService: FlashMessagesService,
               private authService: AuthService) {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       'email': ['', [Validators.required, Validators.email]],
-      'password': ['', [Validators.required, Validators.minLength(6)]]
+      'password': ['', [Validators.required, Validators.minLength(6)]],
+      'confirmPassword': ['', [Validators.required, Validators.minLength(6)]],
+      'displayName': ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
@@ -30,15 +32,23 @@ export class LoginFormComponent implements OnInit {
   }
 
   get email() {
-    return this.loginForm.get('email');
+    return this.registerForm.get('email');
   }
 
   get password() {
-    return this.loginForm.get('password');
+    return this.registerForm.get('password');
   }
 
-  onLogin() {
-    this.authService.login(this.email.value, this.password.value)
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  get displayName() {
+    return this.registerForm.get('displayName');
+  }
+
+  onRegister() {
+    this.authService.register(this.email.value, this.password.value, this.displayName.value)
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);

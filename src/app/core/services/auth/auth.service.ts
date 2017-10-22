@@ -11,8 +11,8 @@ import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/throttleTime';
 
-import { IUser, User } from '../../models/user';
 import { IpService } from '../ip/ip.service';
+import { IUser, User } from '../../models/user';
 
 @Injectable()
 export class AuthService {

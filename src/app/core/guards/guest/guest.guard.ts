@@ -4,10 +4,10 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { AuthService } from './../../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class GuestGuard implements CanActivate {
 
   constructor(private router: Router,
               private authService: AuthService) { }
@@ -18,10 +18,10 @@ export class AuthGuard implements CanActivate {
     return this.authService.authState
       .map(user => {
         const loggedIn = !!user;
-        if (loggedIn) {
+        if (!loggedIn) {
           return true;
         } else {
-          this.router.navigate(['login'], { queryParams: { cbUrl: state.url } });
+          this.router.navigate(['']);
           return false;
         }
       });

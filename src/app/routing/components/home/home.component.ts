@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from './../../services/auth/auth.service';
-import { IpService } from './../../services/ip/ip.service';
-import { User } from './../../models/user';
-import { Role } from './../../models/role';
+import { AuthService, IpService, Role, User } from '@app/core';
 
 @Component({
   selector: 'app-home',
