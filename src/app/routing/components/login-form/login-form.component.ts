@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { MatSnackBar } from '@angular/material';
 
 import { AuthService } from '@app/core';
 
@@ -15,18 +14,17 @@ export class LoginFormComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private flashMessagesService: FlashMessagesService,
-              private authService: AuthService) {
-    this.loginForm = this.formBuilder.group({
-      'email': ['', [Validators.required, Validators.email]],
-      'password': ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
+              private snackBar: MatSnackBar,
+              private authService: AuthService) { }
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      'email': ['', [Validators.required, Validators.email]],
+      'password': ['', [Validators.required]]
+    });
   }
 
   get email() {
@@ -42,9 +40,14 @@ export class LoginFormComponent implements OnInit {
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);
+        this.snackBar.open('Welcome back!', 'OK', {
+          duration: 6000
+        });
       })
       .catch(error => {
-        this.flashMessagesService.show(error.message, { cssClass: 'alert-danger', timeout: 6000 });
+        this.snackBar.open(error.message, 'OK', {
+          duration: 6000
+        });
       });
   }
 

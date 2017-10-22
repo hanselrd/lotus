@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { CustomValidators } from 'ng2-validation';
 
 import { AuthService } from '@app/core';
 
@@ -15,20 +16,21 @@ export class RegisterFormComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private fb: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private flashMessagesService: FlashMessagesService,
-              private authService: AuthService) {
-    this.registerForm = this.formBuilder.group({
-      'email': ['', [Validators.required, Validators.email]],
-      'password': ['', [Validators.required, Validators.minLength(6)]],
-      'confirmPassword': ['', [Validators.required, Validators.minLength(6)]],
-      'displayName': ['', [Validators.required, Validators.minLength(4)]]
-    });
-  }
+              private snackBar: MatSnackBar,
+              private authService: AuthService) { }
 
   ngOnInit() {
+    let password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+    let confirmPassword = new FormControl('', [Validators.required, CustomValidators.equalTo(password)])
+    this.registerForm = this.fb.group({
+      'email': ['', [Validators.required, Validators.email]],
+      'password': password,
+      'confirmPassword': confirmPassword,
+      'displayName': ['', [Validators.required, Validators.minLength(4)]]
+    });
   }
 
   get email() {
@@ -52,9 +54,14 @@ export class RegisterFormComponent implements OnInit {
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);
+        this.snackBar.open('Thank you for registering!', 'OK', {
+          duration: 6000
+        });
       })
       .catch(error => {
-        this.flashMessagesService.show(error.message, { cssClass: 'alert-danger', timeout: 6000 });
+        this.snackBar.open(error.message, 'OK', {
+          duration: 6000
+        });
       });
   }
 

@@ -4,26 +4,29 @@ import {
   MatButtonModule,
   MatCardModule,
   MatIconModule,
+  MatInputModule,
   MatMenuModule,
-  MatToolbarModule
+  MatSelectModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatMenuModule,
-    MatToolbarModule
-  ],
+  imports: [],
   declarations: [],
   exports: [
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatInputModule,
     MatMenuModule,
-    MatToolbarModule
+    MatSelectModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }

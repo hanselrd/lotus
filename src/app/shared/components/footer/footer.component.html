@@ -1,8 +1,14 @@
-<footer class="text-center text-muted">
+<mat-toolbar>
+  <small>
+    <em>Copyright &copy; {{ date.getFullYear() }} Lotus</em>
+  </small>
+</mat-toolbar>
+
+<!-- <footer class="text-center text-muted">
   <div *ngIf="(authService.authState | async)">
     <span *ngFor="let role of roles">
       <span [style.color]="(role.data | async)?.color" class="badge badge-light">{{ (role.data | async)?.name }}</span>
     </span>
   </div>
   Copyright &copy; {{ date.getFullYear() }} Lotus
-</footer>
+</footer> -->

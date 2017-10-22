@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -20,7 +21,8 @@ export class AuthService {
   private _authState: Observable<firebase.User>;
   private _user: User;
 
-  constructor(private afAuth: AngularFireAuth,
+  constructor(private router: Router,
+              private afAuth: AngularFireAuth,
               private afDb: AngularFireDatabase,
               private afs: AngularFirestore,
               private ipService: IpService) {
@@ -82,7 +84,8 @@ export class AuthService {
 
   logout() {
     firebase.database().goOffline();
-    return this.afAuth.auth.signOut();
+    return this.afAuth.auth.signOut()
+      .then(() => this.router.navigate(['login']));
   }
 
 }

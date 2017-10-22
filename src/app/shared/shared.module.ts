@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { FlashMessagesModule } from 'angular2-flash-messages';
+import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from '@app/material';
 
@@ -18,7 +17,7 @@ import { CircularJsonPipe } from './pipes/circular-json/circular-json.pipe';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FlashMessagesModule,
+    RouterModule,
     MaterialModule
   ],
   declarations: [
@@ -30,7 +29,7 @@ import { CircularJsonPipe } from './pipes/circular-json/circular-json.pipe';
   ],
   exports: [
     ReactiveFormsModule,
-    FlashMessagesModule,
+    RouterModule,
     MaterialModule,
     FooterComponent,
     NavbarComponent,

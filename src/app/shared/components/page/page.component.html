@@ -1,8 +1,13 @@
-<div class="card">
-  <h4 class="card-header">{{ title }}</h4>
-  <div class="card-body">
-    <div class="card-text">
-      <ng-content></ng-content>
-    </div>
-  </div>
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h2>{{ title }}</h2>
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ description }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-content></ng-content>
+  </mat-card-content>
+</mat-card>
