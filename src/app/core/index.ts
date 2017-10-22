@@ -1,5 +1,7 @@
 export * from './core.module';
 
+export * from './components/app/app.component';
+
 export * from './guards/auth/auth.guard';
 export * from './guards/guest/guest.guard';
 
