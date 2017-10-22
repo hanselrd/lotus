@@ -2,7 +2,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <p>
       <mat-form-field class="full-width">
-        <input matInput formControlName="email" type="email" placeholder="Email">
+        <input matInput formControlName="email" type="email" placeholder="Email" autofocus>
         <mat-error *ngIf="email.errors?.required">
           Email is required
         </mat-error>

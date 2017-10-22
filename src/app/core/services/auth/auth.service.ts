@@ -20,6 +20,7 @@ export class AuthService {
 
   private _authState: Observable<firebase.User>;
   private _user: User;
+  private _statusRef: firebase.database.Reference;
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
@@ -30,14 +31,14 @@ export class AuthService {
     this._authState
       .do(auth => {
         if (auth) {
-          const statusRef = firebase.database().ref(`status/${auth.uid}`);
+          this._statusRef = firebase.database().ref(`status/${auth.uid}`);
           firebase.database().ref('.info/connected')
             .on('value', (snapshot) => {
               if (snapshot.val() == false) return;
-              statusRef.onDisconnect()
+              this._statusRef.onDisconnect()
                 .set({ status: 'offline', lastUpdated: firebase.database.ServerValue.TIMESTAMP })
                 .then(() => {
-                  statusRef.set({ status: 'online', lastUpdated: firebase.database.ServerValue.TIMESTAMP });
+                  this._updateStatus('online');
                 });
             });
         }
@@ -78,14 +79,19 @@ export class AuthService {
             data.ip = this.ipService.ip;
             data.platform = window.navigator.platform;
             User.update(this.afs, auth.uid, data);
+            this._updateStatus('online');
           });
       });
   }
 
   logout() {
-    firebase.database().goOffline();
+    this._updateStatus('offline');
     return this.afAuth.auth.signOut()
       .then(() => this.router.navigate(['login']));
+  }
+
+  private _updateStatus(status: string) {
+    this._statusRef.set({ status, lastUpdated: firebase.database.ServerValue.TIMESTAMP });
   }
 
 }
