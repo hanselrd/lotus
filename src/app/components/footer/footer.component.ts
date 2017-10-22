@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/auth/auth.service';
+import { Role } from './../../models/role';
 
 @Component({
   selector: 'app-footer',
@@ -10,20 +11,15 @@ import { AuthService } from '../../services/auth/auth.service';
 export class FooterComponent implements OnInit {
 
   date: Date = new Date();
-  cssClass: string;
+  roles: Role[];
 
   constructor(public authService: AuthService) {
     authService.authState
       .subscribe(auth => {
         if (auth !== null) {
-          authService.user
-            .subscribe(user => {
-              if (user.access >= 1) {
-                this.cssClass = 'text-danger';
-              }
-              if (user.access >= 2) {
-                this.cssClass = 'text-primary';
-              }
+          authService.user.data
+            .subscribe(userData => {
+              this.roles = userData.roles;
             });
         }
       });

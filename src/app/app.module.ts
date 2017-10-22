@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { firebaseConfig } from './firebase.config';
 
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -13,7 +14,6 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import { RoutingModule } from './modules/routing/routing.module';
 import { CollapseDirective } from './directives/collapse.directive';
 import { AuthService } from './services/auth/auth.service';
-import { DatabaseService } from './services/database/database.service';
 import { ElectronService } from './services/electron/electron.service';
 import { ElectronHwidService } from './services/electron-hwid/electron-hwid.service';
 import { IpService } from './services/ip/ip.service';
@@ -35,11 +35,11 @@ import { FooterComponent } from './components/footer/footer.component';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    AngularFirestoreModule.enablePersistence(),
     FlashMessagesModule
   ],
   providers: [
     AuthService,
-    DatabaseService,
     ElectronService,
     ElectronHwidService,
     IpService

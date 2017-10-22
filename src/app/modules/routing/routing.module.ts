@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../../guards/auth/auth.guard';
 import { GuestGuard } from '../../guards/guest/guest.guard';
+import { CircularJsonPipe } from './../../pipes/circular-json/circular-json.pipe';
 import { PageComponent } from '../../components/page/page.component';
 import { HomeComponent } from '../../components/home/home.component';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
@@ -36,12 +37,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule],
   declarations: [
+    CircularJsonPipe,
     PageComponent,
     HomeComponent,
     LoginFormComponent,

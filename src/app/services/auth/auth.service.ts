@@ -1,30 +1,49 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/throttleTime';
 
-import { User } from '../../models/user';
+import { IUser, User } from '../../models/user';
 import { IpService } from '../ip/ip.service';
 
 @Injectable()
 export class AuthService {
 
   private _authState: Observable<firebase.User>;
-  private _user: Observable<User>;
-  private _userRef: AngularFireObject<User>;
+  private _user: User;
 
   constructor(private afAuth: AngularFireAuth,
               private afDb: AngularFireDatabase,
+              private afs: AngularFirestore,
               private ipService: IpService) {
     this._authState = afAuth.authState;
-    this._authState.subscribe(auth => {
-      if (auth !== null) {
-        this._userRef = afDb.object(`users/${auth.uid}`);
-        this._user = this._userRef.valueChanges();
-      }
+    this._authState
+      .do(auth => {
+        if (auth) {
+          const statusRef = firebase.database().ref(`status/${auth.uid}`);
+          firebase.database().ref('.info/connected')
+            .on('value', (snapshot) => {
+              if (snapshot.val() == false) return;
+              statusRef.onDisconnect()
+                .set({ status: 'offline', lastUpdated: firebase.database.ServerValue.TIMESTAMP })
+                .then(() => {
+                  statusRef.set({ status: 'online', lastUpdated: firebase.database.ServerValue.TIMESTAMP });
+                });
+            });
+        }
+      })
+      .subscribe(auth => {
+        if (auth) {
+          this._user = new User(afs, auth);
+        }
     });
   }
 
@@ -39,28 +58,31 @@ export class AuthService {
   register(email: string, password: string, displayName: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(auth => {
-        const user = new User(auth);
-        user.displayName = displayName;
-        this.afDb.object(`users/${auth.uid}`).set(user);
+        let data = {} as IUser;
+        data.displayName = displayName;
+        data.ip = this.ipService.ip;
+        data.platform = window.navigator.platform;
+        data.providers = JSON.parse(JSON.stringify(auth.providerData));
+        User.set(this.afs, auth.uid, data);
       });
   }
 
   login(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(auth => {
-        this.afDb.object(`users/${auth.uid}`).update({
-          ip: this.ipService.ip,
-          platform: window.navigator.platform
-        });
+        let user = new User(this.afs, auth);
+        user.data
+          .subscribe(data => {
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            User.update(this.afs, auth.uid, data);
+          });
       });
   }
 
   logout() {
+    firebase.database().goOffline();
     return this.afAuth.auth.signOut();
-  }
-
-  update(user: User) {
-    return this._userRef.update(user);
   }
 
 }

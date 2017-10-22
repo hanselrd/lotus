@@ -1,10 +1,10 @@
 <app-page title="Login">
   <form [formGroup]="loginForm" (submit)="onLogin()">
     <div class="form-group">
-      <label [ngClass]="{'text-danger': email.touched && email.invalid}" for="email">Email address</label>
+      <label [class.text-danger]="email.touched && email.invalid" for="email">Email address</label>
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input formControlName="email" [ngClass]="{'is-invalid': email.touched && email.invalid}" type="email" class="form-control" placeholder="Email">
+        <input formControlName="email" [class.is-invalid]="email.touched && email.invalid" type="email" class="form-control" placeholder="Email">
       </div>
       <div *ngIf="email.touched && email.invalid; else emailNoErrors">
         <small *ngIf="email.errors?.required" class="form-text text-danger">
@@ -19,10 +19,10 @@
       </ng-template>
     </div>
     <div class="form-group">
-      <label [ngClass]="{'text-danger': password.touched && password.invalid}" for="password">Password</label>
+      <label [class.text-danger]="password.touched && password.invalid" for="password">Password</label>
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-        <input formControlName="password" [ngClass]="{'is-invalid': password.touched && password.invalid}" type="password" class="form-control" placeholder="Password">
+        <input formControlName="password" [class.is-invalid]="password.touched && password.invalid" type="password" class="form-control" placeholder="Password">
       </div>
       <div *ngIf="password.touched && password.invalid">
         <small *ngIf="password.errors?.required" class="form-text text-danger">
