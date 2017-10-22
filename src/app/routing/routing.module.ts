@@ -22,7 +22,6 @@ import { routes } from './routes';
     RegisterFormComponent
   ],
   exports: [
-    CommonModule,
     RouterModule
   ]
 })

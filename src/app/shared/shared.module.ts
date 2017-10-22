@@ -29,7 +29,6 @@ import { CircularJsonPipe } from './pipes/circular-json/circular-json.pipe';
     CircularJsonPipe
   ],
   exports: [
-    CommonModule,
     ReactiveFormsModule,
     FlashMessagesModule,
     MaterialModule,

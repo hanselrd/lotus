@@ -19,7 +19,6 @@ import {
   ],
   declarations: [],
   exports: [
-    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
