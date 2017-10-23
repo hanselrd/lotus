@@ -1,7 +1,9 @@
 <app-page title="Dashboard">
   <p>Welcome, {{ (user.data | async)?.displayName }}</p>
   <p>Your IP address is: {{ ipService.ip }}</p>
-  <div *ngFor="let role of roles">
-    {{ (role.data | async) | json }}
-  </div>
+  <mat-chip-list>
+    <mat-chip *ngFor="let role of roles">
+      {{ (role.data | async)?.name }}
+    </mat-chip>
+  </mat-chip-list>
 </app-page>

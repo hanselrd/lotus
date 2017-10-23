@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule,
   MatCardModule,
+  MatChipsModule,
   MatIconModule,
   MatInputModule,
   MatMenuModule,
@@ -22,6 +23,7 @@ import {
     FlexLayoutModule,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatIconModule,
     MatInputModule,
     MatMenuModule,
