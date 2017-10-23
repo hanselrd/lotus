@@ -6,7 +6,7 @@
     <span>Lotus</span>
     <span class="app-spacer"></span>
     <div *ngIf="(authService.authState | async); else guest">
-      <button mat-button [matMenuTriggerFor]="appMenu" matTooltip="User functions">
+      <button mat-button [matMenuTriggerFor]="appMenu" matTooltip="User menu">
         <span>{{ (authService.user.data | async)?.displayName }}</span>
         <mat-icon>more_vert</mat-icon>
       </button>
