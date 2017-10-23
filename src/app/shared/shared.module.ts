@@ -6,8 +6,9 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material';
 
 import { FooterComponent } from './components/footer/footer.component'; // remove
-import { NavbarComponent } from './components/navbar/navbar.component'; // remove
+import { HeaderComponent } from './components/header/header.component'; // remove
 import { PageComponent } from './components/page/page.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 import { CollapseDirective } from './directives/collapse/collapse.directive';
 
@@ -22,8 +23,9 @@ import { CircularJsonPipe } from './pipes/circular-json/circular-json.pipe';
   ],
   declarations: [
     FooterComponent,
-    NavbarComponent,
+    HeaderComponent,
     PageComponent,
+    SidenavComponent,
     CollapseDirective,
     CircularJsonPipe
   ],
@@ -32,8 +34,9 @@ import { CircularJsonPipe } from './pipes/circular-json/circular-json.pipe';
     RouterModule,
     MaterialModule,
     FooterComponent,
-    NavbarComponent,
+    HeaderComponent,
     PageComponent,
+    SidenavComponent,
     CollapseDirective,
     CircularJsonPipe
   ]

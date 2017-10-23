@@ -1,7 +1,7 @@
 <app-page title="Register">
   <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
     <p>
-      <mat-form-field class="full-width">
+      <mat-form-field class="app-full-width">
         <input matInput formControlName="email" type="email" placeholder="Email" autofocus>
         <mat-error *ngIf="email.errors?.required">
           Email is required
@@ -12,7 +12,7 @@
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field class="full-width">
+      <mat-form-field class="app-full-width">
         <input matInput formControlName="password" type="password" placeholder="Password">
         <mat-error *ngIf="password.errors?.required">
           Password is required
@@ -23,7 +23,7 @@
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field class="full-width">
+      <mat-form-field class="app-full-width">
         <input matInput formControlName="confirmPassword" type="password" placeholder="Confirm Password">
         <mat-error *ngIf="confirmPassword.errors?.required">
           Confirm Password is required
@@ -34,7 +34,7 @@
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field class="full-width">
+      <mat-form-field class="app-full-width">
         <input matInput formControlName="displayName" type="text" placeholder="Display Name">
         <mat-error *ngIf="displayName.errors?.required">
           Display Name is required

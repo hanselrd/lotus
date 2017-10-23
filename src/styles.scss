@@ -11,6 +11,15 @@ $app-theme:   mat-light-theme($app-primary, $app-accent, $app-warn);
 
 @include angular-material-theme($app-theme);
 
-.full-width {
+/* Global classes */
+.app-full-width {
   width: 100%;
+}
+
+.app-icon {
+  padding: 0 16px;
+}
+
+.app-spacer {
+  flex: 1 1 auto;
 }
