@@ -4,7 +4,7 @@ node_js:
 install:
   - npm install
 script:
-  - mv src/app/firebase.config.example.ts src/app/firebase.config.ts
+  - mv src/app/core/firebase.config.example.ts src/app/core/firebase.config.ts
   - npm run build
   - npm run build:docs
   - npm run build:electron
