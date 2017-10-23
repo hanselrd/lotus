@@ -1,8 +1,8 @@
-<app-page title="Login">
+<app-page title="Log in">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <p>
       <mat-form-field class="app-full-width">
-        <input matInput formControlName="email" type="email" placeholder="Email" autofocus>
+        <input matInput formControlName="email" type="email" placeholder="Email">
         <mat-error *ngIf="email.errors?.required">
           Email is required
         </mat-error>
@@ -20,7 +20,7 @@
       </mat-form-field>
     </p>
     <p>
-      <button mat-raised-button color="primary" [disabled]="loginForm.invalid">LOGIN</button>
+      <button mat-raised-button color="primary" [disabled]="loginForm.invalid">LOG IN</button>
     </p>
   </form>
 </app-page>

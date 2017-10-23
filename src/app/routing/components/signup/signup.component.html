@@ -1,8 +1,8 @@
-<app-page title="Register">
-  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+<app-page title="Sign up">
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
     <p>
       <mat-form-field class="app-full-width">
-        <input matInput formControlName="email" type="email" placeholder="Email" autofocus>
+        <input matInput formControlName="email" type="email" placeholder="Email">
         <mat-error *ngIf="email.errors?.required">
           Email is required
         </mat-error>
@@ -45,7 +45,7 @@
       </mat-form-field>
     </p>
     <p>
-      <button mat-raised-button color="primary" [disabled]="registerForm.invalid">REGISTER</button>
+      <button mat-raised-button color="primary" [disabled]="signupForm.invalid">SIGN UP</button>
     </p>
   </form>
 </app-page>

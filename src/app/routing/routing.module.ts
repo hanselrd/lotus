@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared';
 
 import { HomeComponent } from './components/home/home.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
-import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 import { routes } from './routes';
 
@@ -18,8 +18,8 @@ import { routes } from './routes';
   ],
   declarations: [
     HomeComponent,
-    LoginFormComponent,
-    RegisterFormComponent
+    LoginComponent,
+    SignupComponent
   ],
   exports: [
     RouterModule

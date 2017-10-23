@@ -8,13 +8,13 @@ import { CustomValidators } from 'ng2-validation';
 import { AuthService } from '@app/core';
 
 @Component({
-  selector: 'app-register-form',
-  templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss']
 })
-export class RegisterFormComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
-  registerForm: FormGroup;
+  signupForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -25,7 +25,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() {
     let password = new FormControl('', [Validators.required, Validators.minLength(6)]);
     let confirmPassword = new FormControl('', [Validators.required, CustomValidators.equalTo(password)])
-    this.registerForm = this.fb.group({
+    this.signupForm = this.fb.group({
       'email': ['', [Validators.required, Validators.email]],
       'password': password,
       'confirmPassword': confirmPassword,
@@ -34,27 +34,27 @@ export class RegisterFormComponent implements OnInit {
   }
 
   get email() {
-    return this.registerForm.get('email');
+    return this.signupForm.get('email');
   }
 
   get password() {
-    return this.registerForm.get('password');
+    return this.signupForm.get('password');
   }
 
   get confirmPassword() {
-    return this.registerForm.get('confirmPassword');
+    return this.signupForm.get('confirmPassword');
   }
 
   get displayName() {
-    return this.registerForm.get('displayName');
+    return this.signupForm.get('displayName');
   }
 
-  onRegister() {
-    this.authService.register(this.email.value, this.password.value, this.displayName.value)
+  onSignup() {
+    this.authService.signup(this.email.value, this.password.value, this.displayName.value)
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);
-        this.snackBar.open('Thank you for registering!', 'OK', {
+        this.snackBar.open('Thank you for joining us!', 'OK', {
           duration: 6000
         });
       })
