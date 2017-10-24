@@ -1,26 +1,53 @@
 <app-page title="Log in">
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <p>
-      <mat-form-field class="app-full-width">
-        <input matInput formControlName="email" type="email" placeholder="Email">
-        <mat-error *ngIf="email.errors?.required">
-          Email is required
-        </mat-error>
-        <mat-error *ngIf="!email.errors?.required && email.errors?.email">
-          Please enter a valid email address
-        </mat-error>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field class="app-full-width">
-        <input matInput formControlName="password" type="password" placeholder="Password">
-        <mat-error *ngIf="password.errors?.required">
-          Password is required
-        </mat-error>
-      </mat-form-field>
-    </p>
-    <p>
-      <button mat-raised-button color="primary" [disabled]="loginForm.invalid">LOG IN</button>
-    </p>
-  </form>
+  <mat-grid-list cols="2" rowHeight="230px">
+    <mat-grid-tile>
+      <div>
+        <p>
+          <button mat-raised-button class="foreign-login-button" color="primary">
+            <mat-icon>lock</mat-icon>
+            <span>Facebook</span>
+          </button>
+        </p>
+        <p>
+          <button mat-raised-button class="foreign-login-button" color="primary">
+            <mat-icon>lock</mat-icon>
+            <span>Google</span>
+          </button>
+        </p>
+        <p>
+          <button mat-raised-button class="foreign-login-button" color="primary">
+            <mat-icon>lock</mat-icon>
+            <span>Twitter</span>
+          </button>
+        </p>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <p>
+          <mat-form-field class="app-full-width">
+            <input matInput formControlName="email" type="email" placeholder="Email">
+            <mat-error *ngIf="email.errors?.required">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="!email.errors?.required && email.errors?.email">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="app-full-width">
+            <input matInput formControlName="password" [type]="(showPassword.checked)? 'text' : 'password'" placeholder="Password">
+            <mat-error *ngIf="password.errors?.required">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          <mat-checkbox color="primary" #showPassword>Show Password</mat-checkbox>
+        </p>
+        <p>
+          <button mat-raised-button color="primary" [disabled]="loginForm.invalid">LOG IN</button>
+        </p>
+      </form>
+    </mat-grid-tile>
+  </mat-grid-list>
 </app-page>
