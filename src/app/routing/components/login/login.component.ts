@@ -35,6 +35,18 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+  onFacebookLogin() {
+    alert('Facebook login not supported');
+  }
+
+  onGoogleLogin() {
+    alert('Google login not supported');
+  }
+
+  onTwitterLogin() {
+    alert('Twitter login not supported');
+  }
+
   onLogin() {
     this.authService.login(this.email.value, this.password.value)
       .then(() => {
