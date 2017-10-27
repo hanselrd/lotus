@@ -58,7 +58,7 @@ export class AuthService {
     return this._user;
   }
 
-  signup(email: string, password: string, displayName: string) {
+  signUp(email: string, password: string, displayName: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(auth => {
         let data = {} as IUser;
@@ -70,7 +70,95 @@ export class AuthService {
       });
   }
 
-  login(email: string, password: string) {
+  googleLogIn() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider)
+      .then(auth => {
+        let user = new User(this.afs, auth.user);
+        user.data.subscribe(data => {
+          if (data) {
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.update(this.afs, auth.user.uid, data);
+          } else {
+            data = {} as IUser;
+            data.displayName = 'google-user';
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.set(this.afs, auth.user.uid, data);
+          }
+        });
+      });
+  }
+
+  facebookLogIn() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider)
+      .then(auth => {
+        let user = new User(this.afs, auth.user);
+        user.data.subscribe(data => {
+          if (data) {
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.update(this.afs, auth.user.uid, data);
+          } else {
+            data = {} as IUser;
+            data.displayName = 'facebook-user';
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.set(this.afs, auth.user.uid, data);
+          }
+        });
+      });
+  }
+
+  twitterLogIn() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider)
+      .then(auth => {
+        let user = new User(this.afs, auth.user);
+        user.data.subscribe(data => {
+          if (data) {
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.update(this.afs, auth.user.uid, data);
+          } else {
+            data = {} as IUser;
+            data.displayName = 'twitter-user';
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.set(this.afs, auth.user.uid, data);
+          }
+        });
+      });
+  }
+
+  gitHubLogIn() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GithubAuthProvider)
+      .then(auth => {
+        let user = new User(this.afs, auth.user);
+        user.data.subscribe(data => {
+          if (data) {
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.update(this.afs, auth.user.uid, data);
+          } else {
+            data = {} as IUser;
+            data.displayName = 'github-user';
+            data.ip = this.ipService.ip;
+            data.platform = window.navigator.platform;
+            data.providers = JSON.parse(JSON.stringify(auth.user.providerData));
+            User.set(this.afs, auth.user.uid, data);
+          }
+        });
+      });
+  }
+
+  emailLogIn(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(auth => {
         let user = new User(this.afs, auth);
@@ -79,12 +167,11 @@ export class AuthService {
             data.ip = this.ipService.ip;
             data.platform = window.navigator.platform;
             User.update(this.afs, auth.uid, data);
-            this._updateStatus('online');
           });
       });
   }
 
-  logout() {
+  logOut() {
     this._updateStatus('offline');
     return this.afAuth.auth.signOut()
       .then(() => this.router.navigate(['login']));

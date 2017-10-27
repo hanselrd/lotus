@@ -1,9 +1,11 @@
 <app-page title="Dashboard">
-  <p>Welcome, {{ (user.data | async)?.displayName }}</p>
-  <p>Your IP address is: {{ ipService.ip }}</p>
+  <p>Welcome, <strong>{{ (user.data | async)?.displayName }}</strong></p>
+  <p>IP address is: <strong>{{ ipService.ip }}</strong></p>
+  <p>User ID: <strong>{{ (user.data | async)?.id }}</strong></p>
   <mat-chip-list>
     <mat-chip *ngFor="let role of roles">
       {{ (role.data | async)?.name }}
     </mat-chip>
   </mat-chip-list>
+  <p>{{ (user.data | async) | circularJson }}</p>
 </app-page>

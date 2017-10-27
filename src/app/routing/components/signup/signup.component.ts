@@ -49,8 +49,8 @@ export class SignupComponent implements OnInit {
     return this.signupForm.get('displayName');
   }
 
-  onSignup() {
-    this.authService.signup(this.email.value, this.password.value, this.displayName.value)
+  onSignUp() {
+    this.authService.signUp(this.email.value, this.password.value, this.displayName.value)
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);

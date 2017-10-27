@@ -16,10 +16,14 @@ $app-theme:   mat-light-theme($app-primary, $app-accent, $app-warn);
   width: 100%;
 }
 
-.app-icon {
+.app-icon-padding {
   padding: 0 16px;
 }
 
 .app-spacer {
   flex: 1 1 auto;
+}
+
+.app-text-center {
+  text-align: center;
 }

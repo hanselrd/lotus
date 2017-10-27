@@ -35,20 +35,28 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  onFacebookLogin() {
-    alert('Facebook login not supported');
+  onGoogleLogIn() {
+    this.authService.googleLogIn()
+      .then(() => this.router.navigate(['']));
   }
 
-  onGoogleLogin() {
-    alert('Google login not supported');
+  onFacebookLogIn() {
+    this.authService.facebookLogIn()
+      .then(() => this.router.navigate(['']));
   }
 
-  onTwitterLogin() {
-    alert('Twitter login not supported');
+  onTwitterLogIn() {
+    this.authService.twitterLogIn()
+      .then(() => this.router.navigate(['']));
   }
 
-  onLogin() {
-    this.authService.login(this.email.value, this.password.value)
+  onGitHubLogIn() {
+    this.authService.gitHubLogIn()
+      .then(() => this.router.navigate(['']));
+  }
+
+  onEmailLogIn() {
+    this.authService.emailLogIn(this.email.value, this.password.value)
       .then(() => {
         let cbUrl = this.route.snapshot.queryParamMap.get('cbUrl');
         this.router.navigate([cbUrl || '']);
