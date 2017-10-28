@@ -1,0 +1,42 @@
+<app-page title="Log in">
+  <p class="app-text-center">
+    <button mat-button color="primary" (click)="onGoogleLogIn()" matTooltip="Google">
+      <i class="fa fa-google fa-lg"></i>
+    </button>
+    <button mat-button color="primary" (click)="onFacebookLogIn()" matTooltip="Facebook">
+      <i class="fa fa-facebook fa-lg"></i>
+    </button>
+    <button mat-button color="primary" (click)="onTwitterLogIn()" matTooltip="Twitter">
+      <i class="fa fa-twitter fa-lg"></i>
+    </button>
+    <button mat-button color="primary" (click)="onGitHubLogIn()" matTooltip="GitHub">
+      <i class="fa fa-github fa-lg"></i>
+    </button>
+  </p>
+  <p class="app-text-center"><strong><em>or</em></strong></p>
+  <form [formGroup]="loginForm" (ngSubmit)="onEmailLogIn()">
+    <p>
+      <mat-form-field class="app-full-width">
+        <input matInput formControlName="email" type="email" placeholder="Email">
+        <mat-error *ngIf="email.errors?.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="!email.errors?.required && email.errors?.email">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="app-full-width">
+        <input matInput formControlName="password" [type]="(showPassword.checked)? 'text' : 'password'" placeholder="Password">
+        <mat-error *ngIf="password.errors?.required">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+      <mat-checkbox color="primary" #showPassword>Show Password</mat-checkbox>
+    </p>
+    <p>
+      <button mat-raised-button color="primary" [disabled]="loginForm.invalid">LOG IN</button>
+    </p>
+  </form>
+</app-page>
