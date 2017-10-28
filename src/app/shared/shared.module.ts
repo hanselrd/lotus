@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from '@app/material';
 
+import { AboutDialogComponent } from './components/footer/about-dialog/about-dialog.component'; // remove
 import { FooterComponent } from './components/footer/footer.component'; // remove
 import { HeaderComponent } from './components/header/header.component'; // remove
 import { PageComponent } from './components/page/page.component';
@@ -22,12 +23,16 @@ import { CircularJsonPipe } from './pipes/circular-json/circular-json.pipe';
     MaterialModule
   ],
   declarations: [
+    AboutDialogComponent,
     FooterComponent,
     HeaderComponent,
     PageComponent,
     SidenavComponent,
     CollapseDirective,
     CircularJsonPipe
+  ],
+  entryComponents: [
+    AboutDialogComponent
   ],
   exports: [
     ReactiveFormsModule,
