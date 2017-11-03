@@ -1,3 +1,45 @@
-<p>
-  about-dialog works!
-</p>
+<h2 mat-dialog-title>About</h2>
+<mat-dialog-content>
+  <h3>Who?</h3>
+  <p>
+    Under development by
+    <a href="http://github.com/hanselrd" target="_blank" tabindex="-1">
+      <i class="fa fa-github"></i> hanselrd
+    </a>
+  </p>
+
+  <h3>What?</h3>
+  <p>
+    Lotus is an open-source personal project made using
+    <a href="https://angular.io" target="_blank" tabindex="-1">Angular</a>
+    along with Google's
+    <a href="https://firebase.google.com/docs/database" target="_blank" tabindex="-1">Firebase Realtime Database</a>
+    and new
+    <a href="https://firebase.google.com/docs/firestore/" target="_blank" tabindex="-1">Cloud Firestore</a>.
+  </p>
+
+  <h3>When?</h3>
+  <p>
+    There is no ETA, but keep checking back for updates!
+  </p>
+
+  <h3>Where?</h3>
+  <p>
+    What do you mean where?
+  </p>
+
+  <h3>Why?</h3>
+  <p>
+    The purpose of this project is to create a friendly environment for people to come together
+    to share their knowledge and ideas with like minded people. As well as create a game we can all enjoy.
+  </p>
+
+  <h3>@@ Random Data @@</h3>
+  <p>
+    This is data passed into this dialog from its parent as a test.
+    Eventually I will remove this: <strong>{{ data.message }}</strong>.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>
